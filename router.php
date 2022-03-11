@@ -14,7 +14,7 @@
 
 $action = (string)null;
 $componente = (string)null;
-$nome = (string)null;
+
 
 
 
@@ -22,15 +22,19 @@ $nome = (string)null;
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     $componente = strtoupper($_GET['componente']);       
-    $action = $_GET['action'];
+    $action = strtoupper($_GET['action']);
 
 
     //estrura condicional para avalidar quem esta solicitando  algo
        switch($componente){
 
-            case 'CONTATOS':
+            case 'CONTATOS' ;
                
-                        echo('chamando a controlle de contatos');
+              require_once('./controller/ControllerContatos.php');
+
+                        if($action == 'INSERIR'){
+                               inserirContatos($_POST);
+                        }
             break;
   }
 }

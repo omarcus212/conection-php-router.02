@@ -12,10 +12,6 @@ const USER = 'root';
 const PASSWORD = 'bcd127';
 const DATABASE = 'dbcontatos';
 
-$resultado = conexaoMysql();
-echo('<pre>');
-    var_dump($resultado);
-echo('</pre>');
 
  //Abre a conexão com o BD Mysql
  function conexaoMysql ()
