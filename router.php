@@ -33,10 +33,29 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
               require_once('./controller/ControllerContatos.php');
 
                         if($action == 'INSERIR'){
-                               inserirContatos($_POST);
+
+
+                         $resposta =  inserirContatos($_POST);                                // esta colocando o return do inserirContatos na variavel %resposta
+
+                               if(is_bool($resposta)){                                       // verificando se o return é booleano 
+                                  echo("<script>
+                                         alert('REGISTRO INSIRIDO COM SUCESSO');
+                                         window.location.href = 'index.php';
+                                         </script>");
+
+                               }elseif(is_array($resposta)){                                      // (se nao) / verificando se o return é um arrey
+
+                                echo("<script>
+                                alert('".$resposta['message']."');
+                                window.history.back();
+                                </script>");
+
+                               }
+
+                              break;
                         }
-            break;
-  }
+            
+    }
 }
 
 ?>

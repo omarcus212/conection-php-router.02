@@ -33,10 +33,28 @@ include('conexaoMysql.php');
          '".$dadocontatos['email']."',
          '".$dadocontatos{'obs'}."');";
 
+      //se deu certo ou se deu erro no script
+      if(mysqli_query($conexao,$sql)){// executa o escrip no bds , mysqli_query(QUALBANCODEDADOS,QUAISDADOS);  
+              
+                     if(mysqli_affected_rows($conexao))         //se teve uma linha afetada ou nao no bds = linha afeteda = se o banco recusou ou add a linha 'script';
+
+                        return true;
+
+                     else
+
+                        return false;
+
+               }
+                 else{                             
+
+                  return false;
+               }
 
 
-      mysqli_query($conexao,$sql);   // executa o escrip no bds , mysqli_query(QUALBANCODEDADOS,QUAISDADOS);
-    }
+}
+
+                                                                                                                                                                                            
+                                                                                                                                                                                                                                                                                                                                                                                                                                                          
 
     function updateContato(){
         
@@ -49,7 +67,29 @@ include('conexaoMysql.php');
 
 
     function selectAllContatos(){
-        
+       $conetion = conexaoMysql();            //abrindo conexao com bds
+
+       $slq = 'select "from tblcontatos"' ;
+
+       $result = mysqli_query($conetion,$slq);
+        if($result){
+           $cont = 0;
+              while($rsdados = mysqli_fetch_assoc($result)){
+                      
+               $arreydados[$cont] = array(
+
+                  "Nome"  =>$rsdados['nome'],
+                  "Telefone"  =>$rsdados['telefone'],
+                  "Celular"  =>$rsdados['celular'],
+                  "Email"  =>$rsdados['Email'],
+                  "Obs"  =>$rsdados['obs']
+               );
+               $cont++;
+            } 
+            return $arreydados;
+        }
+
+    
     }
 
 

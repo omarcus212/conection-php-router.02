@@ -19,7 +19,7 @@
 
         if(!empty($dadoscontatos['txtNome']) & !empty($dadoscontatos['txtCelular']) & !empty($dadoscontatos['txtEmail'])){
    
-  $arreyDados = array(
+      $arreyDados = array(
             
       "nome" => $dadoscontatos['txtNome'],
       "telefone" => $dadoscontatos['txtTelefone'],
@@ -29,19 +29,34 @@
         
   );
 
-  require_once('./model/bd/contato.php');          //chamanda e mandando para a funcao insert la na model
-  insertContato($arreyDados);
 
-        }else{
+        require_once('./model/bd/contato.php');         //chamanda e mandando para a funcao insert la na model
+         if(insertContato($arreyDados)){
 
-                echo('falso');
+             return true;
 
-        }
+         }else{
 
-     }else{
-         echo('<alert> sem dados </alert> ');
-     }
+                return array('idErro ' => 1, 
+                'message' => 'nao foi possivel inserir os dados' );     
+         }
+
+         
+             }else {
+
+              return array('idErro ' => 2,  'message' => 'existem campos obrigatorios que nao foram preenchidos');
+
+             }
+
+
+
+    }
+
+        
  }
+
+
+
 
 
  function atualizarContatos(){
@@ -56,5 +71,15 @@
  
  function listarrContatos(){
      
-     
+    require_once('./model/bd/contato.php');
+    
+    $dados = selectAllContatos();
+ 
+    if(!empty($dados)){
+           
+        return $dados;
+    }else{
+
+        return false;
+    }
 }
