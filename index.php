@@ -82,20 +82,23 @@
                 </tr>
                 
                <?php
-                 require_once('./controller/ControllerContatos.php');
-                 $listcontatos = listarrContatos();
-                 foreach($listcontatos as $item){
+                 require_once('controller/ControllerContatos.php');
+                 $listcontatos = listarContatos();
+                 
+                foreach ($listcontatos as $item){
                   
                 
             ?>
                 <tr id="tblLinhas">
-                    <td class="tblColunas registros"><?=$item['nome']?></td>
-                    <td class="tblColunas registros"><?=$item['celular']?></td>
-                    <td class="tblColunas registros"><?=$item['email']?></td>
+                    <td class="tblColunas registros"><?=$item['Nome']?></td>
+                    <td class="tblColunas registros"><?=$item['Celular']?></td>
+                    <td class="tblColunas registros"><?=$item['Email']?></td>
                    
                     <td class="tblColunas registros">
                             <img src="img/edit.png" alt="Editar" title="Editar" class="editar">
+                            <a href="router.php?componente=contatos&action=deletar&id=<?=$item['id']?>">
                             <img src="img/trash.png" alt="Excluir" title="Excluir" class="excluir">
+                            </a>            
                             <img src="img/search.png" alt="Visualizar" title="Visualizar" class="pesquisar">
                     </td>
                 </tr>

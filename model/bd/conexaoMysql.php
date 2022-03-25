@@ -13,6 +13,10 @@ const PASSWORD = 'bcd127';
 const DATABASE = 'dbcontatos';
 
 
+function fecharConexaoMyslq($conexao){
+    mysqli_close($conexao);
+}
+
  //Abre a conexão com o BD Mysql
  function conexaoMysql ()
  {      

@@ -178,7 +178,7 @@ input[type=email]:hover{
 
 .excluir:hover, .editar:hover, .pesquisar:hover {
     transform: scale(1.3);
-    transition: 1s;
+    transition: 0.50s;
 }
 
 

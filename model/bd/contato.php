@@ -13,8 +13,9 @@ include('conexaoMysql.php');
 
 
 
-    function insertContato($dadocontatos){
-         
+    function insertContato($dadocontatos){    
+  $resposta = (boolean)false;
+
         // conexao esta recebendo o retorn na fuction conexaoMysql(); // abrindo conexao com o bds
        $conexao = conexaoMysql();
 
@@ -36,24 +37,15 @@ include('conexaoMysql.php');
       //se deu certo ou se deu erro no script
       if(mysqli_query($conexao,$sql)){// executa o escrip no bds , mysqli_query(QUALBANCODEDADOS,QUAISDADOS);  
               
-                     if(mysqli_affected_rows($conexao))         //se teve uma linha afetada ou nao no bds = linha afeteda = se o banco recusou ou add a linha 'script';
-
-                        return true;
-
-                     else
-
-                        return false;
-
-               }
-                 else{                             
-
-                  return false;
-               }
-
-
-}
-
-                                                                                                                                                                                            
+                     if(mysqli_affected_rows($conexao))  {
+                        $resposta = true;
+                     }    
+                        //se teve uma linha afetada ou nao no bds = linha afeteda = se o banco recusou ou add a linha 'script';
+                    fecharConexaoMyslq($conexao);
+                    return $resposta;
+        } 
+       
+    }                                                                                                                                                                                            
                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 
     function updateContato(){
@@ -61,15 +53,34 @@ include('conexaoMysql.php');
     }
 
 
-    function deleteContato(){
+    function deleteContato($id){
+
+      $statusResposta = (boolean)false;
+
+        $conexao = conexaoMysql();
+
+        $slq ="delete from tblcontatos where idcontato = ".$id;
+
+       if( mysqli_query($conexao,$slq)){
+          if(mysqli_affected_rows($conexao)){            //verifica se o bds teve sucesso na execucao
+            $statusResposta = true;
+
+          }
+          fecharConexaoMyslq($conexao);    
+          return $statusResposta;
+       }
+
+  
         
     }
+
+
 
 
     function selectAllContatos(){
        $conetion = conexaoMysql();            //abrindo conexao com bds
 
-       $slq = 'select "from tblcontatos"' ;
+       $slq = "select * from tblcontatos order by idcontato desc" ;                 ///coloca na lista no mysql em orede decrecente(desc) = descendente (asc) = acendente;
 
        $result = mysqli_query($conetion,$slq);
         if($result){
@@ -77,16 +88,20 @@ include('conexaoMysql.php');
               while($rsdados = mysqli_fetch_assoc($result)){
                       
                $arreydados[$cont] = array(
-
+                  "id"   => $rsdados['idcontato'],
                   "Nome"  =>$rsdados['nome'],
                   "Telefone"  =>$rsdados['telefone'],
                   "Celular"  =>$rsdados['celular'],
-                  "Email"  =>$rsdados['Email'],
+                  "Email"  =>$rsdados['email'],
                   "Obs"  =>$rsdados['obs']
                );
                $cont++;
             } 
+           
+            
+            fecharConexaoMyslq($conetion);
             return $arreydados;
+            
         }
 
     
