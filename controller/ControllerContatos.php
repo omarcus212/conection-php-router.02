@@ -12,95 +12,119 @@
 
 
 
- function inserirContatos($dadoscontatos){
-      
-     if(!empty($dadoscontatos)){              //verificando se a caixa esta vazia     //empty = serve para verificar se o elemento esta vazio 
-
-
-        if(!empty($dadoscontatos['txtNome']) & !empty($dadoscontatos['txtCelular']) & !empty($dadoscontatos['txtEmail'])){
-   
-      $arreyDados = array(
-            
-      "nome" => $dadoscontatos['txtNome'],
-      "telefone" => $dadoscontatos['txtTelefone'],
-      "celular" => $dadoscontatos['txtCelular'],
-      "email" => $dadoscontatos['txtEmail'],
-      "obs" => $dadoscontatos['txtObs']
+    function inserirContatos($dadoscontatos){
         
-  );
+        if(!empty($dadoscontatos)){              //verificando se a caixa esta vazia     //empty = serve para verificar se o elemento esta vazio 
 
 
-        require_once('./model/bd/contato.php');         //chamanda e mandando para a funcao insert la na model
-         if(insertContato($arreyDados)){
+            if(!empty($dadoscontatos['txtNome']) & !empty($dadoscontatos['txtCelular']) & !empty($dadoscontatos['txtEmail'])){
+    
+        $arreyDados = array(
+                
+        "nome" => $dadoscontatos['txtNome'],
+        "telefone" => $dadoscontatos['txtTelefone'],
+        "celular" => $dadoscontatos['txtCelular'],
+        "email" => $dadoscontatos['txtEmail'],
+        "obs" => $dadoscontatos['txtObs']
+            
+    );
 
-             return true;
+            require_once('./model/bd/contato.php');         //chamanda e mandando para a funcao insert la na model
+            if(insertContato($arreyDados)){
 
-         }else{
+                return true;
 
-                return array('idErro ' => 1, 
-                'message' => 'nao foi possivel inserir os dados' );     
-         }
+            }else{
 
-         
-             }else {
+                    return array('idErro ' => 1, 
+                    'message' => 'nao foi possivel inserir os dados' );     
+            }
 
-              return array('idErro ' => 2,  'message' => 'existem campos obrigatorios que nao foram preenchidos');
+            
+                }else {
 
-             }
+                return array('idErro ' => 2,  'message' => 'existem campos obrigatorios que nao foram preenchidos');
+
+                }
 
 
 
+        }
+
+            
     }
 
+
+
+    function atualizarContatos(){    
+    }
+
+
+
+
+    function excluirContatos($id){
+
+        if($id != 0 && !empty($id) && is_numeric($id)){
+
+            require_once('model/bd/contato.php');
+
+            if(deleteContato($id)){
+
+                return true;
+            }else{
+
+                return array('idErro' => 3,
+                                'message' => 'o banco de dados nao pode excluir o regristo');
+            }
+
+
+        }else{
+
+            return array('idErro' => 4,
+                        'message' => 'nao é possivel excluir o registro sem um id valido');
+        }
         
- }
-
-
-
-
-
- function atualizarContatos(){
-     
- }
-
-
- function excluirContatos($id){
-
-     if($id != 0 && !empty($id) && is_numeric($id)){
-
-           require_once('model/bd/contato.php');
-
-           if(deleteContato($id)){
-
-               return true;
-           }else{
-
-               return array('idErro' => 3,
-                            'message' => 'o banco de dados nao pode excluir o regristo');
-           }
-
-
-     }else{
-
-        return array('idErro' => 4,
-                     'message' => 'nao é possivel excluir o registro sem um id valido');
-     }
-     
- }
- 
- 
- function listarContatos(){
-     
-    require_once('model/bd/contato.php');
+    }
     
-    $dados = selectAllContatos();
- 
-    if(!empty($dados))
+    
+
+
+    function listarContatos(){
+        
+        require_once('model/bd/contato.php');
+        
+        $dados = selectAllContatos();
+    
+        if(!empty($dados))
+            
+            return $dados;
+
+        else
+
+            return false;
+        
+    }
+
+
+
+
+    function buscarContatos($id){
+        
+        if($id != 0 && !empty($id) && is_numeric($id)){
+            require_once('model/bd/contato.php');
+
+            $dadosarrey = selectByidContatos($id);
+
+            if(!empty($dadosarrey)){
+                  return $dadosarrey;
+            }else{
+                return false;
+            }
+
+        }else{
+            return array('idErro' => 4,
+            'message' => 'nao é possivel buscar o registro sem um id valido');
            
-        return $dados;
+        }
 
-    else
-
-        return false;
-    
-}
+    }

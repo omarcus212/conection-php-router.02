@@ -61,7 +61,7 @@ include('conexaoMysql.php');
 
         $slq ="delete from tblcontatos where idcontato = ".$id;
 
-       if( mysqli_query($conexao,$slq)){
+       if(mysqli_query($conexao,$slq)){
           if(mysqli_affected_rows($conexao)){            //verifica se o bds teve sucesso na execucao
             $statusResposta = true;
 
@@ -70,7 +70,7 @@ include('conexaoMysql.php');
           return $statusResposta;
        }
 
-  
+       return $statusResposta;
         
     }
 
@@ -105,6 +105,38 @@ include('conexaoMysql.php');
         }
 
     
+    }
+
+
+
+    function selectByidContatos($id){                         // function para buscar no bds um contato ja registrado 
+
+      $conetion = conexaoMysql();            //abrindo conexao com bds
+
+       $slq = "select * from tblcontatos where idcontato =".$id ;                 ///coloca na lista no mysql em orede decrecente(desc) = descendente (asc) = acendente;
+
+       $result = mysqli_query($conetion,$slq);
+        if($result){
+           
+              if($rsdados = mysqli_fetch_assoc($result)){
+                      
+               $arreydados = array(
+                  "id"   => $rsdados['idcontato'],
+                  "Nome"  =>$rsdados['nome'],
+                  "Telefone"  =>$rsdados['telefone'],
+                  "Celular"  =>$rsdados['celular'],
+                  "Email"  =>$rsdados['email'],
+                  "Obs"  =>$rsdados['obs']
+               );
+               
+            } 
+           
+            
+            fecharConexaoMyslq($conetion);
+            return $arreydados;
+            
+        }
+
     }
 
 

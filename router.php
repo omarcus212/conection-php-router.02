@@ -48,33 +48,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                             alert('" . $resposta['message'] . "');
                             window.history.back();
                             </script>");
-
-
-
         }
 
-        } else if ($action == 'DELETAR') {                              // DELETAR veio da href da index, onde criamos um compenento e uma action em GET para poder colocar e trazer o id
+        } else if ($action == 'DELETAR') {                              // DELETAR veio da href da index(linha 99/100), onde criamos um compenento e uma action em GET para poder colocar e trazer o id
           $idContatos = $_GET['id'];
-          $respostadelet = excluirContatos($idContatos);
+          $respostadados = excluirContatos($idContatos);
 
           if (is_bool($respostadelet)) {
+                    echo ("<script>
+                          alert('REGISTRO EXCLUIDO COM SUCESSO');
+                          window.location.href = 'index.php';
+                            </script>");
+
+          }else if(is_array($respostadelet)){
                       echo ("<script>
-                            alert('REGISTRO EXCLUIDO COM SUCESSO');
-                            window.location.href = 'index.php';
-                              </script>");
-          }
+                      alert('" . $resposta['message'] . "');
+                      window.history.back();
+                      </script>");
 
-         }elseif(is_array($respostadelet)){
-                        echo ("<script>
-                        alert('" . $resposta['message'] . "');
-                        window.history.back();
-                        </script>");
+         }
 
 
-        break;
-      }
+        
+      }else if($action == 'BUSCAR'){
 
+        $idContatos = $_GET['id'];
+        $respostadados = buscarContatos($idContatos);
+         
+        session_start();                                                                            //ativa a utilizacao de variaveis de sessao no servidor 
+        $_SESSION['dadosContatos']=$respostadados;                                                 //guarda em uma variavel de sassao os dados que o banco de dados retornou para a buscar do id
+                                                                                                  //(obs esse variavel de sessao sera utilizada na index, para colocar os dados na caixas de texto = passando os dados da route pra index e colocando nas caixa de texto)
+         require_once('index.php');                                                           
+      }                                                                                         
 
+      break;
 
 
   }
