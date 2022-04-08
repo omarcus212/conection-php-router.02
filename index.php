@@ -1,5 +1,11 @@
 <?php
 
+//($form) = variavel para saber se o conteudo do formulario vai ser para editar(atualiza) ou inserir
+// caso seja inserir o $form vai para o action do formulario e inseri o novo dado
+// se os dados ja existirem entao o btn é editar ai ele entre na estrutura de repeticao e excuta o script de editar;
+$form = (string)"router.php?componente=contatos&action=inserir";
+
+
 if(session_status()){                                     // verifica se a variavel de sessao esta ativa 
     if(!empty($_SESSION['dadosContatos'])){              // verifica se a variavel de sessao nao esta vazia 
                     
@@ -9,7 +15,14 @@ if(session_status()){                                     // verifica se a varia
         $celular=  $_SESSION['dadosContatos']['Celular'];
         $email=    $_SESSION['dadosContatos']['Email'];
         $obs=      $_SESSION['dadosContatos']['Obs'];
+
+
+        $form = "router.php?componente=contatos&action=editar&id=".$id;
+        unset($_SESSION['dadosContatos']);  // destroi uma variavel de sessao; 
+        /*session_destroy(); destrou todo variavel de sessao do codigo intero*/ 
     }
+
+     
   
 }
 
@@ -34,13 +47,13 @@ if(session_status()){                                     // verifica se a varia
                 
             </div>
             <div id="cadastroInformacoes">
-                <form  action="router.php?componente=contatos&action=inserir" name="frmCadastro" method="post" >
+                <form  action="<?=$form?>" name="frmCadastro" method="post" >
                     <div class="campos">
                         <div class="cadastroInformacoesPessoais">
                             <label> Nome: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <input type="text" name="txtNome" value="<?=$nome?>" placeholder="Digite seu Nome" maxlength="100">
+                            <input type="text" name="txtNome" value="<?=@$nome?>" placeholder="Digite seu Nome" maxlength="100">
                         </div>
                     </div>
                                      
@@ -49,7 +62,7 @@ if(session_status()){                                     // verifica se a varia
                             <label> Telefone: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <input type="tel" name="txtTelefone" value="<?=$telefone?>">
+                            <input type="tel" name="txtTelefone" value="<?=isset($telefone)?$telefone:null ?>">
                         </div>
                     </div>
                     <div class="campos">
@@ -57,7 +70,7 @@ if(session_status()){                                     // verifica se a varia
                             <label> Celular: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <input type="tel" name="txtCelular" value="<?=$celular?>">
+                            <input type="tel" name="txtCelular" value="<?=isset($celular)?$celular:null?>">
                         </div>
                     </div>
                    
@@ -67,7 +80,7 @@ if(session_status()){                                     // verifica se a varia
                             <label> Email: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <input type="email" name="txtEmail" value="<?=$email?>">
+                            <input type="email" name="txtEmail" value="<?=isset($email)?$email:null?>">
                         </div>
                     </div>
                     <div class="campos">
@@ -75,7 +88,7 @@ if(session_status()){                                     // verifica se a varia
                             <label> Observações:  </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <textarea name="txtObs" cols="50" rows="7"><?=$obs?></textarea>
+                            <textarea name="txtObs" cols="50" rows="7"><?=isset($obs)?$obs:null?></textarea>
                         </div>
                     </div>
                     <div class="enviar">
@@ -115,7 +128,7 @@ if(session_status()){                                     // verifica se a varia
                    
                     <td class="tblColunas registros">
 
-                            <a href="router.php?componente=contatos&action=buscar&id=<?=$item['id']?>">
+                            <a href="router.php?componente=contatos&action=buscar&id=<?=$item['id']?>" href="">
                             <img src="img/edit.png" alt="Editar" title="Editar" class="editar">
                             </a>
                             

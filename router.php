@@ -37,30 +37,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
 
         $resposta =  inserirContatos($_POST);                                // esta colocando o return do inserirContatos na variavel %resposta
 
-        if (is_bool($resposta)) {                                       // verificando se o return é booleano 
+      if (is_bool($resposta)) {                                       // verificando se o return é booleano 
                       echo ("<script>
                               alert('REGISTRO INSIRIDO COM SUCESSO');
                               window.location.href = 'index.php';
                               </script>");
 
-        } elseif (is_array($resposta)) {                                      // (se nao) / verificando se o return é um arrey
+      } elseif (is_array($resposta)) {                                      // (se nao) / verificando se o return é um arrey
                       echo ("<script>
                             alert('" . $resposta['message'] . "');
                             window.history.back();
                             </script>");
-        }
+      }
 
-        } else if ($action == 'DELETAR') {                              // DELETAR veio da href da index(linha 99/100), onde criamos um compenento e uma action em GET para poder colocar e trazer o id
+      } else if ($action == 'DELETAR') 
+      { 
+                                     // DELETAR veio da href da index(linha 99/100), onde criamos um compenento e uma action em GET para poder colocar e trazer o id
           $idContatos = $_GET['id'];
           $respostadados = excluirContatos($idContatos);
 
-          if (is_bool($respostadelet)) {
+          if (is_bool($respostadados)) {
                     echo ("<script>
                           alert('REGISTRO EXCLUIDO COM SUCESSO');
                           window.location.href = 'index.php';
                             </script>");
 
-          }else if(is_array($respostadelet)){
+          }else if(is_array($respostadados)){
                       echo ("<script>
                       alert('" . $resposta['message'] . "');
                       window.history.back();
@@ -70,7 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
 
 
         
-      }else if($action == 'BUSCAR'){
+      }else if($action == 'BUSCAR')
+      {
 
         $idContatos = $_GET['id'];
         $respostadados = buscarContatos($idContatos);
@@ -78,11 +81,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
         session_start();                                                                            //ativa a utilizacao de variaveis de sessao no servidor 
         $_SESSION['dadosContatos']=$respostadados;                                                 //guarda em uma variavel de sassao os dados que o banco de dados retornou para a buscar do id
                                                                                                   //(obs esse variavel de sessao sera utilizada na index, para colocar os dados na caixas de texto = passando os dados da route pra index e colocando nas caixa de texto)
-         require_once('index.php');                                                           
+         require_once('index.php');  
+
+      }else if($action == 'EDITAR'){
+            
+        $idcontatos = $_GET['id'];                  //id do action do form 
+
+        $resposta =  atualizarContatos($_POST,$idcontatos);                                // esta colocando o return do inserirContatos na variavel %resposta
+
+      if (is_bool($resposta)) {                                       // verificando se o return é booleano 
+                      echo ("<script>
+                              alert('REGISTRO ATUALIZADO COM SUCESSO');
+                              window.location.href = 'index.php';
+                              </script>");
+
+      } elseif (is_array($resposta)) {                                      // (se nao) / verificando se o return é um arrey
+                      echo ("<script>
+                            alert('" . $resposta['message'] . "');
+                            window.history.back();
+                            </script>");
+      }
+
+
       }                                                                                         
 
       break;
-
+          
 
   }
 }
