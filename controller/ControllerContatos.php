@@ -12,13 +12,25 @@
 
 
 
-    function inserirContatos($dadoscontatos){
+function inserirContatos($dadoscontatos, $file){
         
-        if(!empty($dadoscontatos)){              //verificando se a caixa esta vazia     //empty = serve para verificar se o elemento esta vazio 
+        if(!empty($dadoscontatos)){  //verificando se a caixa esta vazia     //empty = serve para verificar se o elemento esta vazio 
 
-
+        
             if(!empty($dadoscontatos['txtNome']) & !empty($dadoscontatos['txtCelular']) & !empty($dadoscontatos['txtEmail'])){
     
+              if($file != null){
+                require_once('modulo/upload.php');      
+                $resultado = uploand($file['flefoto']);
+                
+                var_dump($resultado);
+                die;
+
+              }else{
+                  echo('deu errado');
+              }
+                 
+                   
         $arreyDados = array(
                 
         "nome" => $dadoscontatos['txtNome'],
@@ -52,7 +64,7 @@
         }
 
             
-    }
+}
 
 
 

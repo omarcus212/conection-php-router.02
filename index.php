@@ -81,8 +81,18 @@ if(session_status()){                                     // verifica se a varia
                         </div>
                         <div class="cadastroEntradaDeDados">
                             <input type="email" name="txtEmail" value="<?=isset($email)?$email:null?>">
-                        </div>
+                        </div> 
                     </div>
+                    
+                    <div class="campos">
+                    <div class="cadastroInformacoesPessoais">
+                        <label> Escolha um arquivo: </label>
+                    </div>
+                    <div class="cadastroEntradaDeDados">
+                        <input type="file" name="flefoto" accept=".jpg, .png, .jpeg, .gif">
+                    </div>
+                </div>
+
                     <div class="campos">
                         <div class="cadastroInformacoesPessoais">
                             <label> Observações:  </label>

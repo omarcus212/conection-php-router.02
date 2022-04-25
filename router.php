@@ -34,8 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
       require_once('./controller/ControllerContatos.php');
 
       if ($action == 'INSERIR') {
+              
+        if(isset($_FILES) && !empty($_FILES)){
 
-        $resposta =  inserirContatos($_POST);                                // esta colocando o return do inserirContatos na variavel %resposta
+          $resposta =  inserirContatos($_POST,$_FILES);        // esta colocando o return do inserirContatos na variavel %resposta
+          
+        }else{
+           echo('erroo');
+           die;
+        }
+         
+  
 
       if (is_bool($resposta)) {                                       // verificando se o return é booleano 
                       echo ("<script>
