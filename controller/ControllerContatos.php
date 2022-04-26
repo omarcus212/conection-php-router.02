@@ -26,8 +26,6 @@ function inserirContatos($dadoscontatos, $file){
                 var_dump($resultado);
                 die;
 
-              }else{
-                  echo('deu errado');
               }
                  
                    

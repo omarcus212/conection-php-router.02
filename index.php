@@ -47,7 +47,7 @@ if(session_status()){                                     // verifica se a varia
                 
             </div>
             <div id="cadastroInformacoes">
-                <form  action="<?=$form?>" name="frmCadastro" method="post" >
+                <form  action="<?=$form?>" name="frmCadastro" method="post" enctype="multipart/form-data" >
                     <div class="campos">
                         <div class="cadastroInformacoesPessoais">
                             <label> Nome: </label>

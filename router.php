@@ -40,8 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
           $resposta =  inserirContatos($_POST,$_FILES);        // esta colocando o return do inserirContatos na variavel %resposta
           
         }else{
-           echo('erroo');
-           die;
+          $resposta =  inserirContatos($_POST,null);   
         }
          
   
