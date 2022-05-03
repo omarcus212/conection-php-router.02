@@ -60,7 +60,8 @@ function updateContato($dadocontatos){
        telefone = '".$dadocontatos{'telefone'}."',
        celular =  '".$dadocontatos{'celular'}."',  
        email =    '".$dadocontatos['email']."',
-       obs =      '".$dadocontatos{'obs'}."'
+       obs =      '".$dadocontatos{'obs'}."',
+       foto =     '".$dadocontatos{'foto'}."'
        where idcontato =".$dadocontatos['id'];
        
     
@@ -153,7 +154,8 @@ function selectByidContatos($id){                         // function para busca
                   "Telefone"  =>$rsdados['telefone'],
                   "Celular"  =>$rsdados['celular'],
                   "Email"  =>$rsdados['email'],
-                  "Obs"  =>$rsdados['obs']
+                  "Obs"  =>$rsdados['obs'],
+                  "Foto"  =>$rsdados['foto']
                );
                
             } 

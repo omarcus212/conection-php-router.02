@@ -10,34 +10,34 @@
  * versao : 1.0
  */
 
-
-
 function inserirContatos($dadoscontatos, $file){
-    require_once('arquivos');
-    $resultfoto = (string)"sem-foto.gif";
+   $resultfoto = (string)null;
         
         if(!empty($dadoscontatos)){  //verificando se a caixa esta vazia     //empty = serve para verificar se o elemento esta vazio 
 
         
             if(!empty($dadoscontatos['txtNome']) & !empty($dadoscontatos['txtCelular']) & !empty($dadoscontatos['txtEmail'])){
     
-              if($file != null){
+              if($file['flefoto']['name'] != null){
                 require_once('modulo/upload.php');      
                 $resultfoto = uploand($file['flefoto']);
 
                 if(is_array($resultfoto)){
-                      
+                    require_once('modulo/config.php'); 
+                   
                     return $resultfoto;
                 }
-            
+                
+              }else{
+                $file['flefoto'] = 'sem-foto.gif';
               }
-                 
+             
                    
         $arreyDados = array(
                 
         "nome" => $dadoscontatos['txtNome'],
         "telefone" => $dadoscontatos['txtTelefone'],
-        "celular" => $dadoscontatos['txtCelular'],
+        "celular" => $dadosconatos['txtCelular'],
         "email" => $dadoscontatos['txtEmail'],
         "obs" => $dadoscontatos['txtObs'],
         "foto" => $resultfoto  
@@ -70,8 +70,12 @@ function inserirContatos($dadoscontatos, $file){
 
 
 
-function atualizarContatos($dadoscontatos,$id){ 
+function atualizarContatos($dadoscontatos,$arreydados){ 
         
+  $id = $arreydados['id'];
+  $namefoto = $arreydados['namefoto'];
+  $file = $arreydados['file'];
+
         if(!empty($dadoscontatos)){              //verificando se a caixa esta vazia     //empty = serve para verificar se o elemento esta vazio 
 
 
@@ -79,21 +83,29 @@ function atualizarContatos($dadoscontatos,$id){
                          
                 if(!empty($id) && $id != 0 && is_numeric($id)){
 
-                
+                if($file['flefoto']['name'] != null){
+                    require_once('modulo/upload.php');      
+                    $novafoto = uploand($file['flefoto']); 
+                }else{
+                    $novafoto = $namefoto;                 //se nova foto tiver null peranence as msm foto que esta no bd;
+                }
+
         $arreyDados = array(
-          "id" => $id,   
+
+        "id" => $id,   
         "nome" => $dadoscontatos['txtNome'],
         "telefone" => $dadoscontatos['txtTelefone'],
         "celular" => $dadoscontatos['txtCelular'],
         "email" => $dadoscontatos['txtEmail'],
-        "obs" => $dadoscontatos['txtObs']
-            
+        "obs" => $dadoscontatos['txtObs'],
+        "foto" => $novafoto
+         
     );
           
   
             require_once('./model/bd/contato.php');         //chamanda e mandando para a funcao insert la na model
             if(updateContato($arreyDados)){
-
+                unlink(DIRETORIO_FILE_UPLOAD.$foto);
                 return true;
 
             }else{
@@ -121,15 +133,29 @@ function atualizarContatos($dadoscontatos,$id){
 
 
 
-function excluirContatos($id){
+function excluirContatos($arreydados){
+
+    $id = $arreydados['id'];
+    $foto = $arreydados['fotoname'];
+
 
         if($id != 0 && !empty($id) && is_numeric($id)){
 
             require_once('model/bd/contato.php');
+            require_once('modulo/config.php');
 
             if(deleteContato($id)){
 
-                return true;
+                if($foto != null ){
+
+                    unlink(DIRETORIO_FILE_UPLOAD.$foto);
+
+                    return true;
+
+                }else{
+                    return true;
+                }
+                 
             }else{
 
                 return array('idErro' => 3,
