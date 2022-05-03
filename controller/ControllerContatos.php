@@ -13,6 +13,8 @@
 
 
 function inserirContatos($dadoscontatos, $file){
+    require_once('arquivos');
+    $resultfoto = (string)"sem-foto.gif";
         
         if(!empty($dadoscontatos)){  //verificando se a caixa esta vazia     //empty = serve para verificar se o elemento esta vazio 
 
@@ -21,11 +23,13 @@ function inserirContatos($dadoscontatos, $file){
     
               if($file != null){
                 require_once('modulo/upload.php');      
-                $resultado = uploand($file['flefoto']);
-                
-                var_dump($resultado);
-                die;
+                $resultfoto = uploand($file['flefoto']);
 
+                if(is_array($resultfoto)){
+                      
+                    return $resultfoto;
+                }
+            
               }
                  
                    
@@ -35,8 +39,8 @@ function inserirContatos($dadoscontatos, $file){
         "telefone" => $dadoscontatos['txtTelefone'],
         "celular" => $dadoscontatos['txtCelular'],
         "email" => $dadoscontatos['txtEmail'],
-        "obs" => $dadoscontatos['txtObs']
-            
+        "obs" => $dadoscontatos['txtObs'],
+        "foto" => $resultfoto  
     );
 
             require_once('./model/bd/contato.php');         //chamanda e mandando para a funcao insert la na model
@@ -66,7 +70,7 @@ function inserirContatos($dadoscontatos, $file){
 
 
 
-    function atualizarContatos($dadoscontatos,$id){ 
+function atualizarContatos($dadoscontatos,$id){ 
         
         if(!empty($dadoscontatos)){              //verificando se a caixa esta vazia     //empty = serve para verificar se o elemento esta vazio 
 
@@ -112,12 +116,12 @@ function inserirContatos($dadoscontatos, $file){
 
         }
         
-    }
+}
 
 
 
 
-    function excluirContatos($id){
+function excluirContatos($id){
 
         if($id != 0 && !empty($id) && is_numeric($id)){
 
@@ -139,12 +143,12 @@ function inserirContatos($dadoscontatos, $file){
                         'message' => 'nao é possivel excluir o registro sem um id valido');
         }
         
-    }
+}
     
     
 
 
-    function listarContatos(){
+function listarContatos(){
         
         require_once('model/bd/contato.php');
         
@@ -158,12 +162,11 @@ function inserirContatos($dadoscontatos, $file){
 
             return false;
         
-    }
+}
 
 
 
-
-    function buscarContatos($id){
+function buscarContatos($id){
         
         if($id != 0 && !empty($id) && is_numeric($id)){
             require_once('model/bd/contato.php');
@@ -182,4 +185,4 @@ function inserirContatos($dadoscontatos, $file){
            
         }
 
-    }
+}

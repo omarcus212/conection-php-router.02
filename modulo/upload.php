@@ -55,14 +55,14 @@ function uploand($arrayfile){
            }else{
                 return  array(
                     'iderro' => 10,
-                'message' => 'vc é burro sabe ler nao, seu merda, sabe nem escolher uma img, aveeeee maria doido' // tamanho do arquivo invalido para upload
+                'message' => ' tamanho do arquivo invalido para upload' 
                );
            }
 
     }else{
         return  array(
             'iderro' => 11,
-        'message' => 'cabaço'  //nao é possivel realizar o upload sem um arquivo selecionado
+        'message' => 'nao é possivel realizar o upload sem um arquivo selecionado'  
        );
     }
 

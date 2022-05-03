@@ -13,7 +13,7 @@ include('conexaoMysql.php');
 
 
 
-    function insertContato($dadocontatos){    
+function insertContato($dadocontatos){    
   $resposta = (boolean)false;
 
         // conexao esta recebendo o retorn na fuction conexaoMysql(); // abrindo conexao com o bds
@@ -24,7 +24,8 @@ include('conexaoMysql.php');
          telefone, 
          celular , 
          email , 
-         obs)
+         obs,
+         foto)
 
       value 
 
@@ -32,7 +33,8 @@ include('conexaoMysql.php');
          '".$dadocontatos{'telefone'}."', 
          '".$dadocontatos{'celular'}."', 
          '".$dadocontatos['email']."',
-         '".$dadocontatos{'obs'}."');";
+         '".$dadocontatos{'obs'}."',
+         '".$dadocontatos{'foto'}."');";
 
       //se deu certo ou se deu erro no script
       if(mysqli_query($conexao,$sql)){// executa o escrip no bds , mysqli_query(QUALBANCODEDADOS,QUAISDADOS);  
@@ -45,10 +47,10 @@ include('conexaoMysql.php');
                     return $resposta;
         } 
        
-    }                                                                                                                                                                                            
+}                                                                                                                                                                                            
                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 
-    function updateContato($dadocontatos){
+function updateContato($dadocontatos){
       $resposta = (boolean)false;
       // conexao esta recebendo o retorn na fuction conexaoMysql(); // abrindo conexao com o bds
      $conexao = conexaoMysql();
@@ -77,10 +79,10 @@ include('conexaoMysql.php');
       } 
      
         
-    }
+}
 
 
-    function deleteContato($id){
+function deleteContato($id){
 
       $statusResposta = (boolean)false;
 
@@ -99,12 +101,11 @@ include('conexaoMysql.php');
 
        return $statusResposta;
         
-    }
+}
 
 
 
-
-    function selectAllContatos(){
+function selectAllContatos(){
        $conetion = conexaoMysql();            //abrindo conexao com bds
 
        $slq = "select * from tblcontatos order by idcontato desc" ;                 ///coloca na lista no mysql em orede decrecente(desc) = descendente (asc) = acendente;
@@ -120,7 +121,8 @@ include('conexaoMysql.php');
                   "Telefone"  =>$rsdados['telefone'],
                   "Celular"  =>$rsdados['celular'],
                   "Email"  =>$rsdados['email'],
-                  "Obs"  =>$rsdados['obs']
+                  "Obs"  =>$rsdados['obs'],
+                  "foto" =>$rsdados['foto']
                );
                $cont++;
             } 
@@ -130,13 +132,11 @@ include('conexaoMysql.php');
             return $arreydados;
             
         }
-
-    
-    }
+}
 
 
 
-    function selectByidContatos($id){                         // function para buscar no bds um contato ja registrado 
+function selectByidContatos($id){                         // function para buscar no bds um contato ja registrado 
 
       $conetion = conexaoMysql();            //abrindo conexao com bds
 
@@ -164,7 +164,7 @@ include('conexaoMysql.php');
             
         }
 
-    }
+}
 
 
 

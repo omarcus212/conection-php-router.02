@@ -239,8 +239,8 @@ input[type=email]:hover{
 /*    margin: auto;*/
 }
 
-.foto{
-    width: 80px;
+.fotoimg{
+    width: 100px;
     height: 80px;
 }
 
@@ -259,7 +259,6 @@ input[type=email]:hover{
 #login{
     height: 200px;
 }
-
 
 
 

@@ -44,10 +44,10 @@ if(session_status()){                                     // verifica se a varia
         <div id="cadastro"> 
             <div id="cadastroTitulo"> 
                 <h1> Cadastro de Contatos </h1>
-                
+               
             </div>
             <div id="cadastroInformacoes">
-                <form  action="<?=$form?>" name="frmCadastro" method="post" enctype="multipart/form-data" >
+                <form  action="<?=$form?>" name="frmCadastro" method="post" enctype="multipart/form-data" >     <!-- enctype = excepcional  para poder enviar arquivos que estao no sue formulario  -->
                     <div class="campos">
                         <div class="cadastroInformacoesPessoais">
                             <label> Nome: </label>
@@ -89,7 +89,7 @@ if(session_status()){                                     // verifica se a varia
                         <label> Escolha um arquivo: </label>
                     </div>
                     <div class="cadastroEntradaDeDados">
-                        <input type="file" name="flefoto" accept=".jpg, .png, .jpeg, .gif">
+                        <input type="file" name="flefoto" accept=".jpg, .png, .jpeg, .gif" value="<?=isset($foto)?$foto:" "?>">
                     </div>
                 </div>
 
@@ -120,6 +120,7 @@ if(session_status()){                                     // verifica se a varia
                     <td class="tblColunas destaque"> Nome </td>
                     <td class="tblColunas destaque"> Celular </td>
                     <td class="tblColunas destaque"> Email </td>
+                    <td class="tblColunas destaque"> foto </td>
                     <td class="tblColunas destaque"> Opções </td>
                 </tr>
                 
@@ -135,6 +136,7 @@ if(session_status()){                                     // verifica se a varia
                     <td class="tblColunas registros"><?=$item['Nome']?></td>
                     <td class="tblColunas registros"><?=$item['Celular']?></td>
                     <td class="tblColunas registros"><?=$item['Email']?></td>
+                    <td class="tblColunas registros"><img src="arquivos/<?=$item['foto']?>" alt="" class="fotoimg" ></td>
                    
                     <td class="tblColunas registros">
 
