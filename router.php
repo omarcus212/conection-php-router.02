@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
         $namefoto = $_GET['foto'];    
 
         $arraydados = array(
-            "id" => $idContatos,
+            "id" => $idcontatos,
             "namefoto" => $namefoto
         );
 

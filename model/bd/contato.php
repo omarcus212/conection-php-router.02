@@ -7,7 +7,7 @@
  * Versão: 1.0
  ***********************************************************************************/
 
-include('conexaoMysql.php');
+require_once('conexaoMysql.php');
 
 // funcoes para realizar  no banco de dados
 
@@ -22,10 +22,11 @@ function insertContato($dadocontatos){
       $sql = "insert into tblcontatos 
          (nome,
          telefone, 
-         celular , 
-         email , 
+         celular, 
+         email, 
          obs,
-         foto)
+         foto,
+         idestado)
 
       value 
 
@@ -34,8 +35,10 @@ function insertContato($dadocontatos){
          '".$dadocontatos{'celular'}."', 
          '".$dadocontatos['email']."',
          '".$dadocontatos{'obs'}."',
-         '".$dadocontatos{'foto'}."');";
+         '".$dadocontatos{'foto'}."',
+          '".$dadocontatos{'idestado'}."');";
 
+        
       //se deu certo ou se deu erro no script
       if(mysqli_query($conexao,$sql)){// executa o escrip no bds , mysqli_query(QUALBANCODEDADOS,QUAISDADOS);  
               
@@ -61,8 +64,12 @@ function updateContato($dadocontatos){
        celular =  '".$dadocontatos{'celular'}."',  
        email =    '".$dadocontatos['email']."',
        obs =      '".$dadocontatos{'obs'}."',
-       foto =     '".$dadocontatos{'foto'}."'
+       foto =     '".$dadocontatos{'foto'}."',
+       idestado =  '".$dadocontatos{'idestado'}."' 
        where idcontato =".$dadocontatos['id'];
+
+       var_dump($sql);
+       die;
        
     
 
@@ -120,17 +127,25 @@ function selectAllContatos(){
                   "id"   => $rsdados['idcontato'],
                   "Nome"  =>$rsdados['nome'],
                   "Telefone"  =>$rsdados['telefone'],
-                  "Celular"  =>$rsdados['celular'],
+                  "celular"  =>$rsdados['celular'],
                   "Email"  =>$rsdados['email'],
                   "Obs"  =>$rsdados['obs'],
-                  "foto" =>$rsdados['foto']
+                  "foto" =>$rsdados['foto'],
+                  "idestado" =>$rsdados['idestado']
                );
                $cont++;
             } 
            
             
             fecharConexaoMyslq($conetion);
-            return $arreydados;
+
+
+            if(isset($arreydados)){
+               return $arreydados;
+            }else{
+               return false;
+            }
+           
             
         }
 }
@@ -152,10 +167,11 @@ function selectByidContatos($id){                         // function para busca
                   "id"   => $rsdados['idcontato'],
                   "Nome"  =>$rsdados['nome'],
                   "Telefone"  =>$rsdados['telefone'],
-                  "Celular"  =>$rsdados['celular'],
+                  "celular"  =>$rsdados['celular'],
                   "Email"  =>$rsdados['email'],
                   "Obs"  =>$rsdados['obs'],
-                  "Foto"  =>$rsdados['foto']
+                  "Foto"  =>$rsdados['foto'],
+                  "idestado" =>$rsdados['idestado']
                );
                
             } 
