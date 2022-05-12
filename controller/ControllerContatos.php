@@ -76,7 +76,7 @@ function atualizarContatos($dadoscontatos,$arreydados){
   $statusfoto = (boolean)false;  
         
   $id = $arreydados['id'];
-  $namefoto = $arreydados['namefoto'];
+  $namefoto = $arreydados['foto'];
   $file = $arreydados['file'];
 
         if(!empty($dadoscontatos)){              //verificando se a caixa esta vazia     //empty = serve para verificar se o elemento esta vazio 

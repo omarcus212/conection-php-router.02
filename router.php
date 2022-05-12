@@ -101,11 +101,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
       }else if($action == 'EDITAR'){
             
         $idcontatos = $_GET['id'];     //id do action do form 
-        $namefoto = $_GET['foto'];    
+        $foto = $_GET['foto'];    
 
         $arraydados = array(
             "id" => $idcontatos,
-            "namefoto" => $namefoto
+            "foto" => $foto,
+            "file" => $_FILES
         );
 
         $resposta =  atualizarContatos($_POST,$arraydados);                                // esta colocando o return do inserirContatos na variavel %resposta

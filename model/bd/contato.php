@@ -68,12 +68,8 @@ function updateContato($dadocontatos){
        idestado =  '".$dadocontatos{'idestado'}."' 
        where idcontato =".$dadocontatos['id'];
 
-       var_dump($sql);
-       die;
-       
     
-
-
+   
 
     //se deu certo ou se deu erro no script
     if(mysqli_query($conexao,$sql)){// executa o escrip no bds , mysqli_query(QUALBANCODEDADOS,QUAISDADOS);  

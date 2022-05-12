@@ -76,7 +76,8 @@ if(session_status()){                                     // verifica se a varia
                           
                                {
                                   ?>
-                                     <option <?=$idestado==$item['idestado']?'selected':null?> value="<?=$item['id']?>"><?=$item['Nome']?></option>
+                                     <option <?=$idestado==$item['idestado']?'selected':null?> value="<?=$item['idestado']?>"><?=$item['Nome']?></option>
+                                     
                                   <?php
                                }
                                 
