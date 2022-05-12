@@ -9,7 +9,7 @@
 //constantes para estabelecer a conexão com o BD (local do BD, usuário, senha e database)
 const SERVER = 'localhost';
 const USER = 'root';
-const PASSWORD = 'Mvnfox258.';
+const PASSWORD = '';
 const DATABASE = 'dbcontatos';
 
 
