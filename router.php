@@ -62,7 +62,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
       { 
                                      // DELETAR veio da href da index(linha 99/100), onde criamos um compenento e uma action em GET para poder colocar e trazer o id
           $idContatos = $_GET['id'];
-          $respostadados = excluirContatos($idContatos);
+          $foto = $_GET['foto'];
+           
+          $arraydados = array(
+                     "id" => $idContatos,
+                     "fotoname" => $foto        
+          );
+
+          $respostadados = excluirContatos($arraydados);
 
           if (is_bool($respostadados)) {
                     echo ("<script>
@@ -93,9 +100,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
 
       }else if($action == 'EDITAR'){
             
-        $idcontatos = $_GET['id'];                  //id do action do form 
+        $idcontatos = $_GET['id'];     //id do action do form 
+        $foto = $_GET['foto'];    
 
-        $resposta =  atualizarContatos($_POST,$idcontatos);                                // esta colocando o return do inserirContatos na variavel %resposta
+        $arraydados = array(
+            "id" => $idcontatos,
+            "foto" => $foto,
+            "file" => $_FILES
+        );
+
+        $resposta =  atualizarContatos($_POST,$arraydados);                                // esta colocando o return do inserirContatos na variavel %resposta
 
       if (is_bool($resposta)) {                                       // verificando se o return é booleano 
                       echo ("<script>

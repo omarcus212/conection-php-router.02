@@ -1,9 +1,11 @@
 <?php
-
+require_once('modulo/config.php');
 //($form) = variavel para saber se o conteudo do formulario vai ser para editar(atualiza) ou inserir
 // caso seja inserir o $form vai para o action do formulario e inseri o novo dado
 // se os dados ja existirem entao o btn é editar ai ele entre na estrutura de repeticao e excuta o script de editar;
 $form = (string)"router.php?componente=contatos&action=inserir";
+$foto = (string)'sem-foto.gif';  
+$idestado=(string)null;        //variavel para carregar o nome da foto do bds;
 
 
 if(session_status()){                                     // verifica se a variavel de sessao esta ativa 
@@ -12,12 +14,14 @@ if(session_status()){                                     // verifica se a varia
         $id=       $_SESSION['dadosContatos']['id'];
         $nome=     $_SESSION['dadosContatos']['Nome'];
         $telefone= $_SESSION['dadosContatos']['Telefone'];
-        $celular=  $_SESSION['dadosContatos']['Celular'];
+        $celular=  $_SESSION['dadosContatos']['celular'];
         $email=    $_SESSION['dadosContatos']['Email'];
         $obs=      $_SESSION['dadosContatos']['Obs'];
+        $foto=     $_SESSION['dadosContatos']['Foto'];
+        $idestado= $_SESSION['dadosContatos']['idestado'];
 
 
-        $form = "router.php?componente=contatos&action=editar&id=".$id;
+        $form = "router.php?componente=contatos&action=editar&id=".$id."&foto=".$foto;
         unset($_SESSION['dadosContatos']);  // destroi uma variavel de sessao; 
         /*session_destroy(); destrou todo variavel de sessao do codigo intero*/ 
     }
@@ -56,6 +60,32 @@ if(session_status()){                                     // verifica se a varia
                             <input type="text" name="txtNome" value="<?=@$nome?>" placeholder="Digite seu Nome" maxlength="100">
                         </div>
                     </div>
+
+                    <div class="campos">
+                        <div class="cadastroInformacoesPessoais">
+                            <label> Estado: </label>
+                        </div>
+                        <div class="cadastroEntradaDeDados">
+                           <select name="sltestado" >
+                             <option value="">Selecione um item</option>
+                              <?php
+                               require_once('controller/ControllerEstados.php');
+                                 
+                               $lisestado = listarEstado();
+                               foreach($lisestado as $item)
+                          
+                               {
+                                  ?>
+                                     <option <?=$idestado==$item['idestado']?'selected':null?> value="<?=$item['idestado']?>"><?=$item['Nome']?></option>
+                                     
+                                  <?php
+                               }
+                                
+
+                             ?>
+                           </select>
+                        </div>
+                    </div>
                                      
                     <div class="campos">
                         <div class="cadastroInformacoesPessoais">
@@ -70,7 +100,7 @@ if(session_status()){                                     // verifica se a varia
                             <label> Celular: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <input type="tel" name="txtCelular" value="<?=isset($celular)?$celular:null?>">
+                            <input type="tel" name="txtcelular" value="<?=isset($celular)?$celular:null?>">
                         </div>
                     </div>
                    
@@ -89,7 +119,7 @@ if(session_status()){                                     // verifica se a varia
                         <label> Escolha um arquivo: </label>
                     </div>
                     <div class="cadastroEntradaDeDados">
-                        <input type="file" name="flefoto" accept=".jpg, .png, .jpeg, .gif" value="<?=isset($foto)?$foto:" "?>">
+                        <input type="file" name="flefoto" accept=".jpg, .png, .jpeg, .gif">
                     </div>
                 </div>
 
@@ -101,6 +131,12 @@ if(session_status()){                                     // verifica se a varia
                             <textarea name="txtObs" cols="50" rows="7"><?=isset($obs)?$obs:null?></textarea>
                         </div>
                     </div>
+
+                    <div class="campos">
+                     <img src="<?=DIRETORIO_FILE_UPLOAD.$foto?>" alt="">
+                    </div>
+
+
                     <div class="enviar">
                         <div class="enviar">
                             <input type="submit" name="btnEnviar" value="Salvar">
@@ -126,17 +162,17 @@ if(session_status()){                                     // verifica se a varia
                 
                <?php
                  require_once('controller/ControllerContatos.php');
-                 $listcontatos = listarContatos();
-                 
+                 if($listcontatos = listarContatos()){
+             
                 foreach ($listcontatos as $item){
-                  
+                  $foto = $item['foto'];
                 
             ?>
                 <tr id="tblLinhas">
                     <td class="tblColunas registros"><?=$item['Nome']?></td>
-                    <td class="tblColunas registros"><?=$item['Celular']?></td>
+                    <td class="tblColunas registros"><?=$item['celular']?></td>
                     <td class="tblColunas registros"><?=$item['Email']?></td>
-                    <td class="tblColunas registros"><img src="arquivos/<?=$item['foto']?>" alt="" class="fotoimg" ></td>
+                    <td class="tblColunas registros"><img src="<?=DIRETORIO_FILE_UPLOAD.$foto?>" alt="" class="fotoimg" ></td>
                    
                     <td class="tblColunas registros">
 
@@ -144,7 +180,7 @@ if(session_status()){                                     // verifica se a varia
                             <img src="img/edit.png" alt="Editar" title="Editar" class="editar">
                             </a>
                             
-                            <a onclick=" return confirm('Deseja excluir esse item')" href="router.php?componente=contatos&action=deletar&id=<?=$item['id']?>">
+                            <a onclick=" return confirm('Deseja excluir esse item')" href="router.php?componente=contatos&action=deletar&id=<?=$item['id']?>&foto=<?=$foto?>">
                             <img src="img/trash.png" alt="Excluir" title="Excluir" class="excluir">
                             </a>  
 
@@ -152,6 +188,7 @@ if(session_status()){                                     // verifica se a varia
                     </td>
                 </tr>
             <?php
+                }
               }
             ?>
             </table>
