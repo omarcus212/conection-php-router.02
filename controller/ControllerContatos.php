@@ -32,6 +32,7 @@ function inserirContatos($dadoscontatos, $file){
                 $file['flefoto'] = 'sem-foto.gif';
               }
              
+             
                    
         $arreyDados = array(
                 

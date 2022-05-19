@@ -12,12 +12,12 @@ if(session_status()){                                     // verifica se a varia
     if(!empty($_SESSION['dadosContatos'])){              // verifica se a variavel de sessao nao esta vazia 
                     
         $id=       $_SESSION['dadosContatos']['id'];
-        $nome=     $_SESSION['dadosContatos']['Nome'];
-        $telefone= $_SESSION['dadosContatos']['Telefone'];
+        $nome=     $_SESSION['dadosContatos']['nome'];
+        $telefone= $_SESSION['dadosContatos']['telefone'];
         $celular=  $_SESSION['dadosContatos']['celular'];
-        $email=    $_SESSION['dadosContatos']['Email'];
-        $obs=      $_SESSION['dadosContatos']['Obs'];
-        $foto=     $_SESSION['dadosContatos']['Foto'];
+        $email=    $_SESSION['dadosContatos']['email'];
+        $obs=      $_SESSION['dadosContatos']['obs'];
+        $foto=     $_SESSION['dadosContatos']['foto'];
         $idestado= $_SESSION['dadosContatos']['idestado'];
 
 
@@ -195,3 +195,8 @@ if(session_status()){                                     // verifica se a varia
         </div>
     </body>
 </html>
+
+
+<!-- composer -->
+<!-- framework php slim  -->
+<!-- instal: composer require slim/slim"^3.0" -->

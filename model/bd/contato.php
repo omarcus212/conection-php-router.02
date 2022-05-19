@@ -150,33 +150,45 @@ function selectAllContatos(){
 
 function selectByidContatos($id){                         // function para buscar no bds um contato ja registrado 
 
+
+
       $conetion = conexaoMysql();            //abrindo conexao com bds
 
-       $slq = "select * from tblcontatos where idcontato =".$id ;                 ///coloca na lista no mysql em orede decrecente(desc) = descendente (asc) = acendente;
+      $conexao = conexaoMysql();
 
-       $result = mysqli_query($conetion,$slq);
-        if($result){
-           
-              if($rsdados = mysqli_fetch_assoc($result)){
-                      
-               $arreydados = array(
-                  "id"   => $rsdados['idcontato'],
-                  "Nome"  =>$rsdados['nome'],
-                  "Telefone"  =>$rsdados['telefone'],
-                  "celular"  =>$rsdados['celular'],
-                  "Email"  =>$rsdados['email'],
-                  "Obs"  =>$rsdados['obs'],
-                  "Foto"  =>$rsdados['foto'],
-                  "idestado" =>$rsdados['idestado']
-               );
-               
-            } 
-           
-            
-            fecharConexaoMyslq($conetion);
-            return $arreydados;
-            
-        }
+      //script para listar todos os dados do BD
+      $sql = "select * from tblcontatos where idcontato = ".$id;
+      
+      //Executa o scrip sql no BD e guarda o retorno dos dados, se houver
+      $result = mysqli_query($conexao, $sql);
+
+      //Valida se o BD retornou registros
+      if($result)
+      {
+          //mysqli_fetch_assoc() - permite converter os dados do BD 
+          //em um array para manipulação no PHP
+          //Nesta repetição estamos, convertendo os dados do BD em um array ($rsDados), além de
+          //o próprio while conseguir gerenciar a qtde de vezes que deverá ser feita a repetição
+          
+          if ($rsDados = mysqli_fetch_assoc($result))
+          {
+              //Cria um array com os dados do BD
+              $arrayDados = array (
+                  "id"        =>  $rsDados['idcontato'],
+                  "nome"      =>  $rsDados['nome'],
+                  "telefone"  =>  $rsDados['telefone'],
+                  "celular"   =>  $rsDados['celular'],
+                  "email"     =>  $rsDados['email'],
+                  "obs"       =>  $rsDados['obs'],
+                  "foto"      =>  $rsDados['foto'],
+                  "idestado"  =>  $rsDados['idestado']
+              );
+          }
+      }    
+          //Solicta o fechamento da conexão com o BD
+         fecharConexaoMyslq($conexao);
+
+          return $arrayDados;
 
 }
 
