@@ -10,6 +10,8 @@
  * versao : 1.0
  */
 
+require_once(SRC.'model/bd/contato.php');
+
 function inserirContatos($dadoscontatos, $file){
    $resultfoto = (string)null;
         
@@ -189,7 +191,7 @@ function excluirContatos($arreydados){
 
 function listarContatos(){
         
-        require_once('model/bd/contato.php');
+        require_once(SRC.'model/bd/contato.php');
         
         $dados = selectAllContatos();
     
@@ -208,7 +210,7 @@ function listarContatos(){
 function buscarContatos($id){
         
         if($id != 0 && !empty($id) && is_numeric($id)){
-            require_once('model/bd/contato.php');
+            require_once(SRC.'model/bd/contato.php');
 
             $dadosarrey = selectByidContatos($id);
 

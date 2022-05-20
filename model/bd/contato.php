@@ -187,8 +187,13 @@ function selectByidContatos($id){                         // function para busca
       }    
           //Solicta o fechamento da conexão com o BD
          fecharConexaoMyslq($conexao);
-
-          return $arrayDados;
+             
+         if(isset($arrayDados)){
+            return $arrayDados;
+         }else{
+            return false;
+         }
+         
 
 }
 
