@@ -106,10 +106,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
         $arraydados = array(
             "id" => $idcontatos,
             "foto" => $foto,
-            "file" => $_FILES
+            "file" => $_FILES,
+            $_POST
         );
 
-        $resposta =  atualizarContatos($_POST,$arraydados);                                // esta colocando o return do inserirContatos na variavel %resposta
+        $resposta =  atualizarContatos($arraydados);                                // esta colocando o return do inserirContatos na variavel %resposta
 
       if (is_bool($resposta)) {                                       // verificando se o return é booleano 
                       echo ("<script>

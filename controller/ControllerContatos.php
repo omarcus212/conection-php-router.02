@@ -12,12 +12,14 @@
 
 require_once(SRC.'model/bd/contato.php');
 
-function inserirContatos($dadoscontatos, $file){
+function inserirContatos($dadoscontatos){
+
    $resultfoto = (string)null;
         
         if(!empty($dadoscontatos)){  //verificando se a caixa esta vazia     //empty = serve para verificar se o elemento esta vazio 
-
-        
+     
+             $file = $dadoscontatos['file'];
+            
             if(!empty($dadoscontatos['txtNome']) & !empty($dadoscontatos['txtcelular']) & !empty($dadoscontatos['txtEmail']) & !empty($dadoscontatos['sltestado'])){
     
               if($file['flefoto']['name'] != null){
@@ -74,25 +76,27 @@ function inserirContatos($dadoscontatos, $file){
  
 
 
-function atualizarContatos($dadoscontatos,$arreydados){ 
+function atualizarContatos($dadoscontatos){ 
 
   $statusfoto = (boolean)false;  
         
-  $id = $arreydados['id'];
-  $namefoto = $arreydados['foto'];
-  $file = $arreydados['file'];
+  $id = $dadoscontatos['id'];
+
+  $namefoto = $dadoscontatos['foto'];
+  
+  $file = $dadoscontatos['file'];
 
         if(!empty($dadoscontatos)){              //verificando se a caixa esta vazia     //empty = serve para verificar se o elemento esta vazio 
 
 
-            if(!empty($dadoscontatos['txtNome']) & !empty($dadoscontatos['txtcelular']) & !empty($dadoscontatos['txtEmail'])){
+            if(!empty($dadoscontatos[0]['Nome']) & !empty($dadoscontatos[0]['celular']) & !empty($dadoscontatos[0]['Email'])){
                          
 
                 if(!empty($id) && $id != 0 && is_numeric($id)){
 
-                if($file['flefoto']['name'] != null){
-                    require_once('modulo/upload.php');      
-                    $novafoto = uploand($file['flefoto']); 
+                if($file['foto']['name'] != null){
+                    require_once(SRC.'modulo/upload.php');      
+                    $novafoto = uploand($file['foto']); 
                     $statusfoto = true;
                 }else{
                     $novafoto = $namefoto;                 //se nova foto tiver null peranence as msm foto que esta no bd;
@@ -101,25 +105,25 @@ function atualizarContatos($dadoscontatos,$arreydados){
         $arreyDados = array(
 
         "id" => $id,   
-        "nome" => $dadoscontatos['txtNome'],
-        "telefone" => $dadoscontatos['txtTelefone'],
-        "celular" => $dadoscontatos['txtcelular'],
-        "email" => $dadoscontatos['txtEmail'],
-        "obs" => $dadoscontatos['txtObs'],
+        "nome" => $dadoscontatos[0]['Nome'],
+        "telefone" => $dadoscontatos[0]['Telefone'],
+        "celular" => $dadoscontatos[0]['celular'],
+        "email" => $dadoscontatos[0]['Email'],
+        "obs" => $dadoscontatos[0]['Obs'],
         "foto" => $novafoto,
-        "idestado"=> $dadoscontatos['sltestado']
+        "idestado"=> $dadoscontatos[0]['sltestado']
          
     );
 
    
   
-            require_once('./model/bd/contato.php');         //chamanda e mandando para a funcao insert la na model
+            require_once(SRC.'model/bd/contato.php');         //chamanda e mandando para a funcao insert la na model
             if(updateContato($arreyDados)){
                
                 //validacao para verificar se sera necessario para apagar a foto antiga
                 if($resultfoto){
 
-                    unlink(DIRETORIO_FILE_UPLOAD.$foto);
+                    unlink(SRC.DIRETORIO_FILE_UPLOAD.$foto);
                 }
                 return true;
 
@@ -146,18 +150,17 @@ function atualizarContatos($dadoscontatos,$arreydados){
 }
 
 
-
-
 function excluirContatos($arreydados){
 
     $id = $arreydados['id'];
-    $foto = $arreydados['fotoname'];
+
+    $foto = $arreydados['foto'];
 
 
         if($id != 0 && !empty($id) && is_numeric($id)){
 
-            require_once('model/bd/contato.php');
-            require_once('modulo/config.php');
+            require_once(SRC.'model/bd/contato.php');
+            require_once(SRC.'modulo/config.php');
 
             if(deleteContato($id)){
 
@@ -185,8 +188,7 @@ function excluirContatos($arreydados){
         }
         
 }
-    
-    
+        
 
 
 function listarContatos(){
