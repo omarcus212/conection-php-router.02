@@ -33,19 +33,20 @@ $url = explode('/',$urlHTTPS);
 //verifica qual a api sera encaminhada a requisição contatos/estados/produtos/etc...
 switch(strtoupper($url[0])){
 
-  case 'CONTATOS';
+  // case 'CONTATOS';
 
-    require_once('contatosapi/index.php'); 
+  //   require_once('contatosapi/index.php'); 
   
-  break; 
+  // break; 
 
 
 
-  case 'ESTADOS';
+  // case 'ESTADOS';
   
-   require_once('contatosapi/index.php'); 
+  //  require_once('contatosapi/index.php'); 
 
 
-  break; 
+  // break; 
 
 }
+require_once('contatosapi/index.php'); 
